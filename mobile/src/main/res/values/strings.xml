@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Wearable NFC</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="eventTitle">Wearable Notification</string>
+    <string name="eventText"></string>
+    <string name="tag_text">Read your TAG</string>
+    <string name="nfc_not_enabled">NFC Reading is not enabled</string>
+    <string name="nfc_disabled">NFC is disabled</string>
+    <string name="edit_text">Edit TAG</string>
+
+</resources>
