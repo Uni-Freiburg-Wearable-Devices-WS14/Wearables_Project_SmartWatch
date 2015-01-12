@@ -9,6 +9,7 @@
     <string name="tag_text">Read your TAG</string>
     <string name="nfc_not_enabled">NFC Reading is not enabled</string>
     <string name="nfc_disabled">NFC is disabled</string>
-    <string name="edit_text">Edit TAG</string>
+    <string name="edit_text">Edit by Voice</string>
+    <string name="label_reply">You said this: </string>
 
 </resources>

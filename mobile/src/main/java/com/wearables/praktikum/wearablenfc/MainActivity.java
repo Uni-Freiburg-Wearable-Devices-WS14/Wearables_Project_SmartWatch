@@ -1,6 +1,7 @@
 package com.wearables.praktikum.wearablenfc;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -18,8 +19,9 @@ public class MainActivity extends Activity {
 
     private static String TAG = "MainActivity";
     private static final int NOTIFICATION_ID = 2;
+    private static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
     private NfcAdapter mNFCadapter;
-    private TextView mMainTextView, mIdText;
+    private TextView mMainTextView, mIdText, mReplyText;
     private PendingIntent mPending;
     private RemoteInput mRemoteInput;
 
@@ -37,10 +39,12 @@ public class MainActivity extends Activity {
 
         mMainTextView = (TextView) findViewById(R.id.main_text_view);
         mIdText = (TextView) findViewById(R.id.nfc_read_tag);
+        mReplyText = (TextView) findViewById(R.id.txt_reply);
 
-        mRemoteInput = new RemoteInput.Builder("extra_voice_reply")
-                    .setLabel(getString(R.string.edit_text))
-                    .build();
+        mRemoteInput = new RemoteInput.Builder(EXTRA_VOICE_REPLY)
+                .setLabel(getString(R.string.edit_text))
+                .build();
+
         mReplyIntent = new Intent(this, this.getClass());
         mPendingReplyIntent = PendingIntent.getActivity(this, 0, mReplyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
@@ -54,7 +58,7 @@ public class MainActivity extends Activity {
 
     private void resolveIntent(Intent pIntent) {
         if(NfcAdapter.ACTION_TAG_DISCOVERED.equals(getIntent().getAction())){
-            Log.i(TAG, "resolveIntent");
+            Log.i(TAG, "NFC_Intent");
             byte[] id = getIntent().getByteArrayExtra(NfcAdapter.EXTRA_ID); // Obtain NFC Tag iD Array
             if (id != null) {
                 long temp = getDec(id);
@@ -65,6 +69,10 @@ public class MainActivity extends Activity {
                 mIdText.setText(idTextHandheld);
                 makeNotifyWear(hexTextNotification);
             }
+        }
+        else if (pIntent.getClipData() != null)
+        {
+            mReplyText.setText(getReplyText(pIntent).toString());
         }
     }
 
@@ -82,11 +90,22 @@ public class MainActivity extends Activity {
 
     private void makeNotifyWear(String pTemp) {
 
+        // Second Action (Reply) Creation
         NotificationCompat.Action wAction = new NotificationCompat.Action.Builder(R.drawable.ic_full_reply,
                 getString(R.string.edit_text), mPendingReplyIntent)
                 .addRemoteInput(mRemoteInput)
                 .build();
 
+        // Style Creation for second page
+        NotificationCompat.BigTextStyle secPage =  new NotificationCompat.BigTextStyle();
+        secPage.setBigContentTitle("Page 2").bigText("Some big text ...");
+
+        // Create a second page of notification
+        Notification secPageNot = new NotificationCompat.Builder(this)
+                .setStyle(secPage)
+                .build();
+
+        // Creation of Main Notification
         NotificationCompat.Builder wNotificationBuilder =
                 new NotificationCompat.Builder(this) // getApplicationContext
                 .setSmallIcon(R.drawable.ic_noti_nfc) // Find an ic_event icon
@@ -94,12 +113,13 @@ public class MainActivity extends Activity {
                 .setContentText(pTemp)
                 .setContentIntent(mPending);
                 //.addAction(R.drawable.ic_map, getString(R.string.map), pEditIntent); // Main content action defined by handheld, in this case the activity itself
+
         BgWear = BitmapFactory.decodeResource(getResources(), R.drawable.bg_wearable_nfc);
-        //BgWear = getResources().R.drawable.bg_wearable_nfc;
 
         NotificationCompat.WearableExtender wExtender =
                 new WearableExtender()
                 .setBackground(BgWear)
+                .addPage(secPageNot)
                 .addAction(wAction);
 
         wNotificationBuilder.extend(wExtender);
@@ -107,6 +127,15 @@ public class MainActivity extends Activity {
         NotificationManagerCompat notificationManagerWear = NotificationManagerCompat.from(this);
 
         notificationManagerWear.notify(NOTIFICATION_ID, wNotificationBuilder.build());
+    }
+
+    private CharSequence getReplyText (Intent pReplyIntent){
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(pReplyIntent);
+        Log.i(TAG,"Char Sequenced!!!");
+        if(remoteInput != null) {
+            return remoteInput.getCharSequence(EXTRA_VOICE_REPLY);
+        }
+        return null;
     }
 
     protected void onResume() {

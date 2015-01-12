@@ -19,5 +19,20 @@
         android:text=""
         android:textSize = "20sp"
         android:paddingTop="20dp"/>
+    <TextView
+        android:id="@+id/lbl_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_reply"
+        android:textSize = "17sp"
+        android:paddingTop="45dp"/>
+    <TextView
+        android:id="@+id/txt_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize = "20sp"
+        android:paddingTop="65dp"/>
+
 
 </RelativeLayout>
