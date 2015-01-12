@@ -43,3 +43,8 @@ $RECYCLE.BIN/
 
 # backup files
 *.bak
+mobile/build.gradle
+wear/build.gradle
+*.properties
+mobile/build.gradle
+wear/build.gradle
