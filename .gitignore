@@ -46,3 +46,5 @@ $RECYCLE.BIN/
 mobile/build.gradle
 wear/build.gradle
 *.properties
+mobile/build.gradle
+wear/build.gradle
