@@ -49,5 +49,4 @@ wear/build.gradle
 mobile/build.gradle
 wear/build.gradle
 gradle/wrapper/gradle-wrapper.properties
-*.properties
-gradle/wrapper/gradle-wrapper.properties
+
