@@ -21,6 +21,7 @@ public class MainActivity extends Activity {
     private static final int NOTIFICATION_ID = 2;
     private static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
     private NfcAdapter mNFCadapter;
+    // New Comment to test Git in Android Studio
     private TextView mMainTextView, mIdText, mReplyText;
     private PendingIntent mPending;
     private RemoteInput mRemoteInput;
