@@ -68,3 +68,7 @@ Temporary Items
 mobile/build.gradle
 wear/build.gradle
 gradle/wrapper/gradle-wrapper.properties
+
+# Build Files
+mobile/build
+wear/build
