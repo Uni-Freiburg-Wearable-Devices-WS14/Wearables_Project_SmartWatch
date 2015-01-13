@@ -28,7 +28,7 @@ $RECYCLE.BIN/
 # Icon must end with two \r
 Icon
 
-.gradle
+*.gradle
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
@@ -64,8 +64,6 @@ Temporary Items
 
 # backup files
 *.bak
-mobile/build.gradle
-wear/build.gradle
 *.properties
 mobile/build.gradle
 wear/build.gradle
