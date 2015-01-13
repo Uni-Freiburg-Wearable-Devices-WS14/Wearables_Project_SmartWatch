@@ -72,3 +72,5 @@ gradle/wrapper/gradle-wrapper.properties
 # Build Files
 mobile/build
 wear/build
+
+*.jar
